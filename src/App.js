@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
+import {useDatalayerValue} from "./UseContext/Datalayer"
 import { Login } from "./Components/Login";
 import { getTokenFromUrl } from "./spotify";
 import SpotifyWebApi from "spotify-web-api-js";
@@ -9,7 +10,10 @@ import { Player } from "./Components/Player";
 const spotify = new SpotifyWebApi();
 
 function App() {
+  //Grabbing the reducer initial state & reducer 
+  const [{},dispatch] = useDatalayerValue()
   const [token, setToken] = useState(null);
+
   useEffect(() => {
     const hash = getTokenFromUrl();
     window.location.hash = "";
