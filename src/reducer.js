@@ -6,6 +6,7 @@ export const initialState = {
   top_artists: null,
   playing: false,
   item: null,
+  token:null
 };
 
 //Reducer
@@ -18,6 +19,11 @@ const reducer = (state, action) => {
         ...state,
         user: action.user,
       };
+      case "SET_TOKEN":
+          return {
+              ...state,
+              token:action.token
+          }
     default:
       return state;
   }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
-import {useDatalayerValue} from "./UseContext/Datalayer"
+import { useDatalayerValue } from "./UseContext/Datalayer";
 import { Login } from "./Components/Login";
 import { getTokenFromUrl } from "./spotify";
 import SpotifyWebApi from "spotify-web-api-js";
@@ -10,30 +10,38 @@ import { Player } from "./Components/Player";
 const spotify = new SpotifyWebApi();
 
 function App() {
-  //Grabbing the reducer initial state & reducer 
-  const [{},dispatch] = useDatalayerValue()
-  const [token, setToken] = useState(null);
+  //Grabbing the reducer initial state & reducer
+  const [{ user, token }, dispatch] = useDatalayerValue();
 
   useEffect(() => {
     const hash = getTokenFromUrl();
     window.location.hash = "";
     const _token = hash.access_token;
     if (_token) {
-      setToken(_token);
+      dispatch({
+        type: "SET_TOKEN",
+        token: _token,
+      });
+
       //Opening channel between spotify and this React app
       spotify.setAccessToken(_token);
 
       spotify.getMe().then((user) => {
-        console.log("person", user);
+        //Reducer functionality >>
+        dispatch({
+          type: "SET_USER",
+          user: user,
+        });
       });
     }
 
-    console.log("I have a token >>>", token);
+    
   }, []);
+  
 
   return (
     <div className="app">
-      {token ? <Player/> : <Login />}
+      {token ? <Player spotify={spotify} /> : <Login />}
       {/*Spotify Logo */}
 
       {/* Login with spotify Button */}
