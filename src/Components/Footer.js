@@ -4,7 +4,7 @@ import '../Style/Footer.css'
 export const Footer = () => {
     return (
         <div className="footer" >
-            <h5>Footer</h5>
+            <h1>Footer</h1>
         </div>
     )
 }
