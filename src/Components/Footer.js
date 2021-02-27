@@ -10,27 +10,74 @@ import PauseCircleOutlineIcon from "@material-ui/icons/PauseCircleOutline";
 import PlaylistPlayIcon from "@material-ui/icons/PlaylistPlay";
 import { Grid, Slider } from "@material-ui/core";
 import { useDatalayerValue } from "../UseContext/Datalayer";
+import SpotifyWebApi from "spotify-web-api-js";
 
-export const Footer = ({ spotify }) => {
+
+const spotify = new SpotifyWebApi();
+
+
+export const Footer = () => {
   const [{ token, item, playing }, dispatch] = useDatalayerValue();
 
-//   useEffect(() => {
-//     spotify.getMyCurrentPlaybackState().then((res) => {
-//         console.log(res);
+  useEffect(() => {
+    spotify.getMyCurrentPlaybackState().then((res) => {
+        console.log(res);
   
-//         dispatch({
-//           type: "SET_PLAYING",
-//           playing: res.is_playing,
-//         });
+        dispatch({
+          type: "SET_PLAYING",
+          playing: res.is_playing,
+        });
   
-//         dispatch({
-//           type: "SET_ITEM",
-//           item: res.item,
-//         });
-//       });
-//   },[spotify])
+        dispatch({
+          type: "SET_ITEM",
+          item: res.item,
+        });
+      });
+  },[spotify])
 
+  const handlePlayPause = () => {
+    if (playing) {
+      spotify.pause();
+      dispatch({
+        type: "SET_PLAYING",
+        playing: false,
+      });
+    } else {
+      spotify.play();
+      dispatch({
+        type: "SET_PLAYING",
+        playing: true,
+      });
+    }
+  };
 
+  const skipNext = () => {
+    spotify.skipToNext();
+    spotify.getMyCurrentPlayingTrack().then((res) => {
+      dispatch({
+        type: "SET_ITEM",
+        item: res.item,
+      });
+      dispatch({
+        type: "SET_PLAYING",
+        playing: true,
+      });
+    });
+  };
+
+  const skipPrevious = () => {
+    spotify.skipToPrevious();
+    spotify.getMyCurrentPlayingTrack().then((res) => {
+      dispatch({
+        type: "SET_ITEM",
+        item: res.item,
+      });
+      dispatch({
+        type: "SET_PLAYING",
+        playing: true,
+      });
+    });
+  };
 
   return (
     <div className="footer">
@@ -54,11 +101,16 @@ export const Footer = ({ spotify }) => {
       </div>
       <div className="footer_center">
         <ShuffleIcon className="footer_green" />
-        <SkipPreviousIcon className="footer_icon" />
-        <PlayCircleOutlineIcon fonstSize="large" className="footer_icon" />
-        <PauseCircleOutlineIcon fontSize="large" className="footer_icon" />
+        <SkipPreviousIcon onClick={skipNext} className="footer_icon" />
+        {playing ? (
 
-        <SkipNextIcon className="footer_icon" />
+          <PauseCircleOutlineIcon onClick={handlePlayPause} fontSize="large" className="footer_icon" />
+          ) : (
+
+            <PlayCircleOutlineIcon onClick={handlePlayPause} fontSize="large" className="footer_icon" />
+          )}
+
+        <SkipNextIcon onClick={skipPrevious} className="footer_icon" />
         <RepeatIcon className="footer_green" />
       </div>
       <div className="footer_right">

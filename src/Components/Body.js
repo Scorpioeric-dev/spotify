@@ -6,9 +6,51 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import { Header } from "./Header";
 import { SongRow } from "./SongRow";
+import SpotifyWebApi from "spotify-web-api-js";
 
-export const Body = ({ spotify }) => {
+const spotify = new SpotifyWebApi();
+
+export const Body = () => {
   const [{ discover_weekly }, dispatch] = useDatalayerValue();
+
+  const playPlaylist = (id) => {
+    spotify
+      .play({
+        context_uri: `spotify:playlist:448Hwhpqil1JyN1JQtaQoo`,
+      })
+      .then((res) => {
+        spotify.getMyCurrentPlayingTrack().then((res) => {
+          dispatch({
+            type: "SET_ITEM",
+            item: res.item,
+          });
+          dispatch({
+            type: "SET_PLAYING",
+            playing: true,
+          });
+        });
+      });
+      
+  };
+
+  const playSong = (id) => {
+    spotify
+      .play({
+        uris: [`spotify:track:${id}`],
+      })
+      .then((res) => {
+        spotify.getMyCurrentPlayingTrack().then((res) => {
+          dispatch({
+            type: "SET_ITEM",
+            item: res.item,
+          });
+          dispatch({
+            type: "SET_PLAYING",
+            playing: true,
+          });
+        });
+      });
+  };
 
   return (
     <div className="body">
@@ -24,12 +66,12 @@ export const Body = ({ spotify }) => {
 
       <div className="body_songs">
         <div className="body_icons">
-          <PlayCircleFilledIcon className="body_shuffle" />
+          <PlayCircleFilledIcon className="body_shuffle onClick={playPlaylist}" />
           <FavoriteIcon fontSize="large" />
           <MoreHorizIcon />
         </div>
         {discover_weekly?.tracks.items.map(item => (
-            <SongRow track={item.track} />
+            <SongRow playSong={playSong} track={item.track} />
         ))}
 
       </div>

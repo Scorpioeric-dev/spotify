@@ -6,7 +6,7 @@ export const initialState = {
   top_artists: null,
   playing: false,
   item: null,
-  token: null,
+  // token: null,
 };
 
 //Reducer
@@ -43,7 +43,17 @@ const reducer = (state, action) => {
           return{
             ...state,
             item:action.item
-          }
+          };
+          case "SET_TOP_ARTISTS":
+            return{
+              ...state,
+              top_artists: action.top_artists
+            };
+            case "SET_SPOTIFY":
+              return{
+                ...state,
+                spotify: action.spotify
+              }
 
     default:
       return state;
