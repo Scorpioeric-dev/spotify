@@ -6,7 +6,7 @@ export const initialState = {
   top_artists: null,
   playing: false,
   item: null,
-  token:null
+  token: null,
 };
 
 //Reducer
@@ -19,11 +19,32 @@ const reducer = (state, action) => {
         ...state,
         user: action.user,
       };
-      case "SET_TOKEN":
-          return {
-              ...state,
-              token:action.token
+    case "SET_TOKEN":
+      return {
+        ...state,
+        token: action.token,
+      };
+    case "SET_PLAYLISTS":
+      return {
+        ...state,
+        playlists: action.playlists,
+      };
+      case "SET_DISCOVER_WEEKLY":
+          return{
+            ...state,
+            discover_weekly:action.discover_weekly
+          };
+      case "SET_PLAYING":
+        return{
+          ...state,
+          playing:action.playing
+        };
+        case "SET_ITEM":
+          return{
+            ...state,
+            item:action.item
           }
+
     default:
       return state;
   }
