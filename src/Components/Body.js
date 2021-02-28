@@ -12,7 +12,7 @@ import SpotifyWebApi from "spotify-web-api-js";
 const spotify = new SpotifyWebApi();
 
 export const Body = ({handlePlayPause}) => {
-  const [{ discover_weekly ,playing}, dispatch] = useDatalayerValue();
+  const [{ discover_weekly ,playing,playlists }, dispatch] = useDatalayerValue();
 
   const playPlaylist = (id) => {
     spotify
@@ -60,7 +60,7 @@ export const Body = ({handlePlayPause}) => {
         <img src={discover_weekly?.images[0].url} alt="" />
         <div className="body_infoText">
           <strong>PLAYLIST</strong>
-          <h2>Discover Weekly</h2>
+          <h1><strong >{discover_weekly?.name}  </strong> </h1>
           <p>{discover_weekly?.description}</p>
         </div>
       </div>

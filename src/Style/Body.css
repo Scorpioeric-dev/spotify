@@ -30,7 +30,14 @@
     padding: 10px;
   }
 
+  .body_infoText > h1,p{
+    font-family: cursive;
+  }
+
+
+
   .body_info > img {
+    
     height:20vw;
     margin: 0 20px;
     box-shadow: 0 4px 60px rgba(0 ,0,0,0.8)
