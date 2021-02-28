@@ -5,7 +5,7 @@
     bottom: 0;
     height: 65px;
     width: 97%;
-    background-color: #282828;
+    background-color: #221f1f;
     padding: 20px;
   }
 
@@ -23,18 +23,18 @@
     }
   }
   .footer_right * .MuiSlider-root {
-    color: green;
+    color: rgb(91, 87, 115);
   }
   .footer_left {
     display: flex;
     align-items: center;
-    color: white;
+    color: rgb(91, 87, 115);
     width: 300px;
     flex: 0.3;
   }
   
   .footer_green {
-    color: #1ed15e;
+    color: rgb(91, 87, 115);
   }
   
   .footer_center {
@@ -51,6 +51,7 @@
   .footer_green:hover {
     transition: transform 0.2s ease-in-out;
     transform: scale(1.2) !important;
+    color:rgb(91, 87, 115);
   }
   
   .footer_right {
