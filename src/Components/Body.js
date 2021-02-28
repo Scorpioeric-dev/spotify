@@ -1,7 +1,8 @@
 import React from "react";
 import "../Style/Body.css";
 import { useDatalayerValue } from "../UseContext/Datalayer";
-import PlayCircleFilledIcon from "@material-ui/icons/PlayCircleFilled";
+import PlayCircleOutlineIcon from "@material-ui/icons/PlayCircleFilled";
+import PauseCircleOutlineIcon from "@material-ui/icons/PauseCircleOutline";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import { Header } from "./Header";
@@ -10,8 +11,8 @@ import SpotifyWebApi from "spotify-web-api-js";
 
 const spotify = new SpotifyWebApi();
 
-export const Body = () => {
-  const [{ discover_weekly }, dispatch] = useDatalayerValue();
+export const Body = ({handlePlayPause}) => {
+  const [{ discover_weekly ,playing}, dispatch] = useDatalayerValue();
 
   const playPlaylist = (id) => {
     spotify
@@ -66,7 +67,14 @@ export const Body = () => {
 
       <div className="body_songs">
         <div className="body_icons">
-          <PlayCircleFilledIcon className="body_shuffle onClick={playPlaylist}" />
+        {playing ? (
+
+          <PauseCircleOutlineIcon className="body_shuffle" onClick={handlePlayPause} fontSize="large" />
+          ) : (
+
+            <PlayCircleOutlineIcon onClick={handlePlayPause} fontSize="large" className="body_shuffle" />
+          )}
+         
           <FavoriteIcon fontSize="large" />
           <MoreHorizIcon />
         </div>
