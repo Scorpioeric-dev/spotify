@@ -12,7 +12,7 @@ import SpotifyWebApi from "spotify-web-api-js";
 const spotify = new SpotifyWebApi();
 
 export const Body = ({handlePlayPause}) => {
-  const [{ discover_weekly ,playing,playlists }, dispatch] = useDatalayerValue();
+  const [{ discover_weekly ,playing }, dispatch] = useDatalayerValue();
 
   const playPlaylist = (id) => {
     spotify
